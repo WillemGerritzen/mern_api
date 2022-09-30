@@ -8,12 +8,12 @@ const app: Express = express();
 
 const port: number = config.get<number>('port');
 
-// app.use(express.json());
+app.use(express.json());
 
 app.listen(port, async () => {
-    logger.info("App is running on http://localhost:" + port);
-
     await connect();
 
     routes(app);
+
+    logger.info("App is running on http://localhost:" + port);
 });

@@ -9,18 +9,21 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: mern_api
     ports:
         - "27017:27017"
     volumes:
         - mongo_data:/data/db
 
-#  app:
-#    build: .
-#    restart: always
-#    ports:
-#      - "1337:1337"
-#    depends_on:
-#      - mongo
+  app:
+    build: .
+    restart: always
+    ports:
+      - "1337:1337"
+    depends_on:
+      - mongo
+    volumes:
+      - .:/usr/src/app
 
 #  mongo-express:
 #    image: mongo-express

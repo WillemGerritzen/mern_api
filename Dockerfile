@@ -11,4 +11,4 @@ RUN yarn install
 # Bundle app source
 COPY . .
 
-CMD [ "yarn", "dev" ]
+CMD [ "yarn", "dev:remote" ]
