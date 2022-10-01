@@ -1,12 +1,14 @@
+import {config} from 'dotenv';
 import express, {Express} from 'express';
-import config from 'config';
 import connect from './utils/connect';
 import logger from "./utils/logger";
 import routes from "./routes";
 
+config();
+
 const app: Express = express();
 
-const port: number = config.get<number>('port');
+const port: number = Number(process.env.PORT);
 
 app.use(express.json());
 

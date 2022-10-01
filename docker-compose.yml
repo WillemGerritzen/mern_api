@@ -1,4 +1,3 @@
-# Use root/example as user/password credentials
 version: '3.8'
 
 services:
@@ -6,10 +5,8 @@ services:
   mongo:
     image: mongo
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: mern_api
+    env_file:
+      - .env
     ports:
         - "27017:27017"
     volumes:
@@ -17,6 +14,8 @@ services:
 
   app:
     build: .
+    env_file:
+      - .env
     restart: always
     ports:
       - "1337:1337"
@@ -24,18 +23,6 @@ services:
       - mongo
     volumes:
       - .:/usr/src/app
-
-#  mongo-express:
-#    image: mongo-express
-#    depends_on:
-#      - mongo
-#    restart: always
-#    ports:
-#      - "8081:8081"
-#    environment:
-#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-#      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-#      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017
 
 volumes:
     mongo_data:

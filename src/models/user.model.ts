@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import config from "config";
 
 export interface UserDocument extends mongoose.Document {
     email: string;
@@ -29,7 +28,9 @@ userSchema.pre<UserDocument>("save", async function (next) {
         return next();
     }
 
-    const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+    const saltWorkFactor: number = Number(process.env.SALT_WORK_FACTOR)
+
+    const salt = await bcrypt.genSalt(saltWorkFactor);
 
     user.password = await bcrypt.hash(user.password, salt);
 
@@ -39,7 +40,7 @@ userSchema.pre<UserDocument>("save", async function (next) {
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
     const user = this as UserDocument;
 
-    return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
+    return bcrypt.compare(candidatePassword, user.password).catch((_) => false);
 }
 
 const UserModel = mongoose.model<UserDocument>("User", userSchema);
