@@ -9,6 +9,8 @@ declare global {
             MONGO_INITDB_ROOT_PASSWORD: string;
             MONDODB_DATABASE: string;
             DB_URI: string;
+            ACCESS_TOKEN_TTL: string;
+            REFRESH_TOKEN_TTL: string;
         }
     }
 }
